@@ -4,14 +4,15 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.find_by_credentials(session_params)
+    username, password = session_params.values
+    @user = User.find_by_credentials(username, password)
 
     if @user
       login_user!(@user)
-      redirect subs_url
+      redirect_to subs_url
     else
-      flash[:errors] = @user.errors_full_message
-      render :new
+      flash[:errors] = ["Invalid username or password"]
+      redirect_to new_sessions_url
     end
   end
 

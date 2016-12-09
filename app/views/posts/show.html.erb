@@ -1,0 +1,8 @@
+<h1><%= @post.title %></h1>
+
+<h4>Content:</h4>
+<p><%= @post.content %></p>
+
+<% if @is_author %>
+  <%= link_to "Edit", edit_post_url(@post) %>
+<% end %>

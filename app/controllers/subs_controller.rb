@@ -14,8 +14,9 @@ class SubsController < ApplicationController
 
   def create
     @sub = Sub.new(sub_params)
-
+    @sub.moderator_id = current_user.id
     if @sub.save
+
       redirect_to sub_url(@sub)
     else
       flash[:errors] = @sub.errors.full_messages
@@ -25,9 +26,12 @@ class SubsController < ApplicationController
 
   def show
     @sub = Sub.find(params[:id])
+    if current_user
+      @is_moderator = current_user.id == @sub.moderator_id
+    else
+      @is_moderator = false
+    end
     render :show
-
-    # CREATE BOOLEAN TO DISPLAY EDIT BUTTON OR NOT
   end
 
   def edit
@@ -53,7 +57,10 @@ class SubsController < ApplicationController
   end
 
   def require_moderator!
-    @sub = Sub.find_by(params[:id])
-    redirect_to sub_url(@sub) unless current_user.id == @sub.moderator_id
+    @sub = Sub.find(params[:id])
+    unless current_user.id == @sub.moderator_id
+      flash[:errors] = ["Must be moderator to edit."]
+      redirect_to sub_url(@sub)
+    end
   end
 end
