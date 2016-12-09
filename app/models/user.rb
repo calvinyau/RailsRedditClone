@@ -3,6 +3,16 @@ class User < ActiveRecord::Base
   validates :username, uniqueness: true
   validates :password, allow_nil: true, length: { minimum: 6 }
 
+  has_many(
+    :subs,
+    foreign_key: :moderator_id
+  )
+
+  has_many(
+    :posts,
+    foreign_key: :author_id
+  )
+
   attr_reader :password
 
   after_initialize :ensure_session_token
