@@ -23,6 +23,6 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login!
-    redirect_to new_sessions_url
+    redirect_to new_sessions_url unless logged_in?
   end
 end
