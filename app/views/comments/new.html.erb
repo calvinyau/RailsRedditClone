@@ -1,0 +1,11 @@
+<h1>New Comment</h1>
+<form action="/comments" method="post">
+  <%= auth_token %>
+
+  <label>Content:
+    <br>
+    <textarea name="comment[content]" id="comment_content" cols="40" rows="10"><%= @comment.content %></textarea>
+  </label>
+  <br>
+  <input type="submit" name="submit" value="Submit!">
+</form>

@@ -10,7 +10,6 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.author_id = current_user.id
-    # @post.sub_id = 1
 
     if @post.save
       redirect_to post_url(@post)
