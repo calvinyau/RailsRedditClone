@@ -17,5 +17,24 @@
     <textarea name="post[content]" id="post_content" cols="40" rows="10"><%= post.content %></textarea>
   </label>
   <br>
+  <br>
+
+  <label>Subs:</label>
+  <br>
+
+  <input type="hidden" name="post[sub_ids][]" value="">
+
+  <% Sub.all.each do |my_sub| %>
+    <label>
+      <input type="checkbox"
+              value="<%= my_sub.id %>"
+              name="post[sub_ids][]"
+              <%= "checked" if @post.sub_ids.include?(my_sub.id) %>>
+      <%= my_sub.title %>
+    </label>
+    <br>
+  <% end %>
+
+  <br>
   <input type="submit" name="submit" value="Submit!">
 </form>

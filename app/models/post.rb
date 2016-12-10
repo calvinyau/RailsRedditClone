@@ -1,6 +1,6 @@
 class Post < ActiveRecord::Base
-  validates :title, :sub_id, :author_id, presence: true
-  validates :title, uniqueness: { scope: :sub_id }
+  validates :title, :author_id, presence: true
+  validates :title, uniqueness: true
 
   belongs_to(
     :author,
@@ -8,5 +8,6 @@ class Post < ActiveRecord::Base
     foreign_key: :author_id
   )
 
-  belongs_to :sub
+  has_many :post_subs, dependent: :destroy, inverse_of: :post
+  has_many :subs, through: :post_subs
 end
